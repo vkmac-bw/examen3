@@ -5,25 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Documentales App</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Íconos de Font Awesome para el menú hamburguesa -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body class="bg-gray-100">
     <nav class="bg-white shadow-lg">
         <div class="max-w-6xl mx-auto px-4">
-            <div class="flex justify-between">
-                <div class="flex space-x-7">
-                    <div class="flex items-center py-4 px-2">
-                        <span class="font-bold text-2xl text-blue-600">Documentales App</span>
-                    </div>
-                    <!-- Menú principal - oculto en móviles -->
-                    <div class="hidden md:flex items-center space-x-4">
-                        <a href="{{ route('documentales.index') }}" class="py-4 px-3 text-gray-700 hover:text-blue-600 font-medium transition duration-300">Documentales</a>
-                        <a href="{{ route('directores.index') }}" class="py-4 px-3 text-gray-700 hover:text-blue-600 font-medium transition duration-300">Directores</a>
-                    </div>
+            <div class="flex justify-between items-center">
+                <div class="flex items-center py-4 px-2">
+                    <span class="font-bold text-2xl text-blue-600">Documentales App</span>
                 </div>
-                <!-- Botón nuevo documental - oculto en móviles -->
-                <div class="hidden md:flex items-center">
+
+                <!-- Botón de menú móvil -->
+                <div class="md:hidden flex items-center">
+                    <button class="mobile-menu-button outline-none" onclick="toggleMenu()">
+                        <svg class="w-6 h-6 text-gray-500" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor">
+                            <path d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Menú de navegación -->
+                <div class="hidden md:flex items-center space-x-4" id="menu">
+                    <a href="{{ route('documentales.index') }}" class="py-4 px-3 text-gray-700 hover:text-blue-600 font-medium transition duration-300">Documentales</a>
+                    <a href="{{ route('directores.index') }}" class="py-4 px-3 text-gray-700 hover:text-blue-600 font-medium transition duration-300">Directores</a>
                     <a href="{{ route('documentales.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300 flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
@@ -31,28 +34,21 @@
                         Nuevo Documental
                     </a>
                 </div>
-                <!-- Botón del menú hamburguesa - solo visible en móviles -->
-                <div class="md:hidden flex items-center">
-                    <button class="outline-none mobile-menu-button">
-                        <i class="fas fa-bars text-gray-700 text-2xl"></i>
-                    </button>
-                </div>
             </div>
-        </div>
-        <!-- Menú móvil -->
-        <div class="hidden mobile-menu">
-            <ul class="">
-                <li class="active"><a href="{{ route('documentales.index') }}" class="block px-4 py-3 text-gray-700 hover:bg-blue-50 transition duration-300">Documentales</a></li>
-                <li><a href="{{ route('directores.index') }}" class="block px-4 py-3 text-gray-700 hover:bg-blue-50 transition duration-300">Directores</a></li>
-                <li>
-                    <a href="{{ route('documentales.create') }}" class="block px-4 py-3 text-blue-600 hover:bg-blue-50 transition duration-300 flex items-center">
+
+            <!-- Menú móvil -->
+            <div class="md:hidden hidden" id="mobile-menu">
+                <div class="flex flex-col space-y-2 pb-4">
+                    <a href="{{ route('documentales.index') }}" class="py-2 px-3 text-gray-700 hover:text-blue-600 font-medium transition duration-300">Documentales</a>
+                    <a href="{{ route('directores.index') }}" class="py-2 px-3 text-gray-700 hover:text-blue-600 font-medium transition duration-300">Directores</a>
+                    <a href="{{ route('documentales.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300 flex items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
                         </svg>
                         Nuevo Documental
                     </a>
-                </li>
-            </ul>
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -66,14 +62,12 @@
         @yield('content')
     </div>
 
+    <!-- Script para el menú móvil -->
     <script>
-        // Script para el menú hamburguesa
-        const btn = document.querySelector(".mobile-menu-button");
-        const menu = document.querySelector(".mobile-menu");
-
-        btn.addEventListener("click", () => {
-            menu.classList.toggle("hidden");
-        });
+        function toggleMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        }
     </script>
 </body>
 </html>
